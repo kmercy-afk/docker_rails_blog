@@ -17,5 +17,4 @@ test:
 
 production:
   <<: *default
-  database: rails_blog_production
-  password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
