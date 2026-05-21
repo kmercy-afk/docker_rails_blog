@@ -19,26 +19,23 @@ RUN npm install -g yarn
 
 WORKDIR /app
 
-# Copy Gemfile first for better caching
+# Copy Gemfile first for better layer caching
 COPY Gemfile Gemfile.lock ./
 
-# Install Bundler and gems
+# Install Bundler and Ruby gems
 RUN gem install bundler --no-document
 RUN bundle install --jobs 4 --retry 3 --without development test
 
 # Copy the rest of the application
 COPY . ./
 
-# Set production environment
+# Production environment variables
 ENV RAILS_ENV=production
 ENV RAILS_SERVE_STATIC_FILES=true
 ENV RAILS_LOG_TO_STDOUT=true
 
-# Precompile assets
-RUN bundle exec rails assets:precompile
+# Precompile assets with a dummy secret key (important for free tier Render)
+RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
 
-# Expose port (Render uses $PORT, default 10000)
-EXPOSE $PORT
-
-# Start command - Using Puma (recommended for production)
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+# Final command: Run migrations then start the server
+CMD ["bash", "-c", "bundle exec rails db:migrate && bundle exec puma -C config/puma.rb"]
