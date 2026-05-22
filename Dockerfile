@@ -24,5 +24,5 @@ ENV RAILS_LOG_TO_STDOUT=true
 
 RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
 
-# Simple and reliable start command
-CMD ["bash", "-c", "bundle exec rails db:migrate && bundle exec puma -C config/puma.rb"]
+# Force migration with better error handling
+CMD ["bash", "-c", "set -e; echo '=== Starting App ==='; echo 'Running db:migrate...'; bundle exec rails db:migrate; echo 'Migrations completed successfully!'; exec bundle exec puma -C config/puma.rb"]
