@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: docker_rails_blog_development
+  username: <%= ENV.fetch("DATABASE_USERNAME", "") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD", "") %>
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+
+test:
+  <<: *default
+  database: docker_rails_blog_test
+  username: <%= ENV.fetch("DATABASE_USERNAME", "") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD", "") %>
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
