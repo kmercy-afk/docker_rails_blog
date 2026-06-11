@@ -14,7 +14,7 @@ RUN yarn install --ignore-engines
 
 COPY . .
 
-RUN DISABLE_SPRING=1 RUBYOPT='-rlogger' bundle exec rails webpacker:compile
+RUN RAILS_ENV=production DISABLE_SPRING=1 RUBYOPT='-rlogger' bundle exec rails assets:precompile
 
 EXPOSE 3000
 
