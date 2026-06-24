@@ -13,4 +13,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
+CMD ["bash", "-c", "bundle exec rails db:migrate && rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
