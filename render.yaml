@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: docker-rails-blog
+    runtime: docker
+    plan: free
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RACK_ENV
+        value: production
