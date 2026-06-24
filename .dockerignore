@@ -1,6 +1,9 @@
 .git
 log/*
 tmp/*
+tmp/pids/*
+tmp/cache/*
+tmp/storage/*
 node_modules
+coverage
 vendor/bundle
-.env
